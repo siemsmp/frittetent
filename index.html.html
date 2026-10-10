@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="nl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Frietimperium</title><meta name="theme-color" content="#fbf1ff">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fbf1ff;--card:#fff;--paper:#fff;--ink:#3a2147;--mut:#7a6890;--red:#ff5a4a;--yel:#ffc233;--ok:#2ec4a0;--line:#eadff5;--sky:#4ea8ff;--pink:#ff9ec7;--hd:"Fredoka","Arial Rounded MT Bold","Arial Black",sans-serif;--bd:"Nunito",system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 var(--bd)}
+main{max-width:580px;margin:0 auto;padding:14px 12px 200px}
+h1{font:22px var(--hd);margin:0;color:var(--red)}
+header{display:flex;justify-content:space-between;align-items:center}
+.sub{color:var(--mut);font-size:14px}
+.stats{background:#1c1633;color:var(--yel);border-radius:12px;padding:12px 16px;margin:10px 0;display:flex;justify-content:space-between;align-items:end;gap:8px}
+.stats b{font:28px var(--hd);display:block;line-height:1.1}.stats small{color:#fbeedd;opacity:.85}
+#sell{width:100%;border:0;border-radius:14px;background:var(--red);color:#fff;font:17px var(--hd);padding:15px;cursor:pointer;box-shadow:0 5px 0 #8c1a13;position:relative}
+#sell:active{transform:translateY(4px);box-shadow:0 1px 0 #8c1a13}
+.pop{position:absolute;right:16px;top:-6px;color:var(--yel);font:16px var(--hd);animation:up .7s forwards;pointer-events:none}
+@keyframes up{to{transform:translateY(-30px);opacity:0}}
+/* restaurant */
+#sw{margin-top:10px;overflow:hidden;border-radius:14px}
+#scene{position:relative;width:540px;height:262px;transform-origin:0 0;border-radius:14px;overflow:hidden;border:3px solid #1c1633;background:#d9c298}
+#scene>*,#stat>*{position:absolute}#stat{inset:0}
+#act{inset:0;pointer-events:none;z-index:4}
+.wall{left:0;right:0;top:0;height:124px;background:var(--wl)}
+.wains{left:0;right:0;top:86px;height:38px;background:rgba(0,0,0,.14);border-top:3px solid rgba(255,255,255,.55)}
+.fl{left:0;right:0;top:124px;bottom:0;background:conic-gradient(#efe0c2 25%,#d9c298 0 50%,#efe0c2 0 75%,#d9c298 0) 0 0/34px 34px;border-top:6px solid #5d3a18}
+.kitw{left:0;width:52%;top:0;height:124px;background:linear-gradient(90deg,rgba(0,0,0,.07) 1px,#0000 1px) 0 0/22px 22px,linear-gradient(rgba(0,0,0,.07) 1px,#0000 1px) 0 0/22px 22px,#e4e9ec;border-right:4px solid #1c1633}
+.kfl{left:0;width:52%;top:124px;height:30px;background:#6f757a;border-right:4px solid #1c1633}
+.glowL{inset:0;background:radial-gradient(circle at 70% 10%,rgba(255,196,80,.5),transparent 70%);pointer-events:none;z-index:3}
+.sgn{left:22%;width:28%;top:4px;background:var(--yel);color:#1c1633;border:3px solid #1c1633;border-radius:8px;text-align:center;font:11px var(--hd);padding:2px;white-space:nowrap;overflow:hidden}
+.sgn.glow{box-shadow:0 0 12px 3px #fff3a0}
+.hood{left:22%;width:28%;top:32px;height:14px;background:#9aa3a9;border:2px solid #1c1633;border-radius:4px 4px 0 0}
+.menu{left:2%;width:19%;top:26px;background:#1c1633;color:var(--yel);font:8px/1.3 var(--hd);text-align:center;padding:3px;border-radius:4px}
+.bsp{left:22%;width:28%;top:100px;height:24px;background:#aab3b9;border:2px solid #6f757a}
+.shf{left:22%;width:28%;top:74px;height:4px;background:#9a9a9a}
+.ap{top:104px;font-size:26px;line-height:1;white-space:nowrap}
+.ap.jb i{font-style:normal;animation:bob .6s infinite alternate;display:inline-block}
+.dsg{left:2%;top:112px;background:var(--red);color:#fff;font:9px var(--hd);padding:2px 4px;border-radius:4px;z-index:2}
+.cnt{left:0;width:52%;top:154px;height:42px;background:repeating-linear-gradient(90deg,#8a5a2b 0 18px,#7a4a24 18px 20px);border-top:6px solid #c58a4a;border-right:4px solid #1c1633;z-index:2}
+.reg{top:128px;font-size:22px;line-height:1;z-index:2}
+.ban{left:3%;top:166px;background:var(--red);color:#fff;font:10px var(--hd);padding:3px 8px;border-radius:6px;z-index:3}
+.lp{top:0;font-size:18px}
+.wn{top:12px;width:50px;height:34px;background:var(--sky,linear-gradient(#8fd3ff,#e6f6ff));border:3px solid #1c1633;border-radius:4px;overflow:hidden}
+.sc{position:absolute;top:10px;font-size:18px;animation:ride 6s linear infinite}
+@keyframes ride{from{right:-24px}to{right:105%}}
+.shfr{left:56%;width:42%;top:74px;height:5px;background:#8a5a2b;border-radius:2px}
+.dec{left:57%;top:50px;font-size:20px;display:flex;gap:6px;line-height:1}
+.door{left:calc(100% - 18px);top:120px;width:18px;height:120px;background:linear-gradient(#bfe6ff,#eaf7ff);border:3px solid #5d3a18;border-right:0;z-index:1}
+.opn{left:calc(100% - 40px);top:100px;background:#fff;color:var(--red);font:9px var(--hd);padding:1px 4px;border:2px solid #1c1633;border-radius:4px}
+.mat{left:84%;top:238px;width:16%;height:8px;background:var(--red);border-radius:2px}
+.tb{z-index:1;width:40px;height:44px}
+@keyframes bob{to{transform:translateY(-4px)}}
+.bump{animation:bump .4s}@keyframes bump{40%{transform:scale(1.02)}}
+.new{animation:pin .6s}@keyframes pin{0%{transform:scale(0)}60%{transform:scale(1.5)}100%{transform:scale(1)}}
+.ac{position:absolute;width:26px;text-align:center;line-height:1;transition:left 1.1s linear,top 1.1s linear;isolation:isolate}
+.hd{display:block;font-size:20px}
+.bd{display:block;width:14px;height:16px;margin:-2px auto 0;border-radius:6px 6px 3px 3px;animation:sway .9s ease-in-out infinite alternate}
+@keyframes sway{to{transform:translateY(-2px)}}
+.pp::before{content:"";position:absolute;left:3px;bottom:-3px;width:20px;height:6px;border-radius:50%;background:rgba(0,0,0,.2);z-index:-1}
+.pp .mb{position:absolute;left:-8px;top:-20px;font-size:15px;background:#fff;border:1px solid #1c1633;border-radius:8px;padding:0 3px;line-height:1.2;white-space:nowrap}
+.pp .mb:empty{display:none}
+.cook{width:30px}.cook .hd{font-size:28px}
+@keyframes wk{from{transform:rotate(-9deg)}to{transform:rotate(9deg) translateY(-3px)}}
+#dtw{left:2%;top:58px;width:19%;height:50px;overflow:hidden;border:3px solid #1c1633;border-radius:4px;background:linear-gradient(#0000 62%,#4a4a4a 62%),var(--sky,linear-gradient(#8fd3ff,#e6f6ff));z-index:2;display:none}
+#dtw.on{display:block}
+.car{width:36px}.car .hd{font-size:26px}.car .mb{position:absolute;left:10px;top:-14px;font-size:13px}
+.ac svg,.ap svg,.tb svg{display:block;overflow:visible}
+.pp svg{animation:sway 1.4s ease-in-out infinite alternate}
+.arm,.lg1,.lg2{transform-box:fill-box;transform-origin:50% 0}
+.mv .lg1{animation:step .28s infinite alternate}.mv .lg2{animation:step .28s infinite alternate-reverse}
+.mv .a1{animation:step .28s infinite alternate-reverse}.mv .a2{animation:step .28s infinite alternate}
+@keyframes step{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
+.cook.wk .a1{animation:stir calc(var(--ws,.6s)/2) infinite alternate}.cook.wk .a2{animation:stir calc(var(--ws,.6s)/2) infinite alternate-reverse}
+@keyframes stir{from{transform:rotate(-32deg)}to{transform:rotate(32deg)}}
+.cook .tool{opacity:0}.cook.wk .tool{opacity:1}
+.sit .lg1,.sit .lg2{display:none}
+.bb{animation:bub 1s infinite;transform-box:fill-box}.bb.b2{animation-delay:.5s}
+@keyframes bub{to{transform:translateY(-4px);opacity:0}}
+.fl2{animation:flick .3s infinite alternate;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes flick{to{transform:scaleY(1.5)}}
+.gl{animation:blink 1.6s infinite}@keyframes blink{50%{opacity:.35}}
+.rc{animation:rcp 4s infinite}@keyframes rcp{0%,60%{transform:translateY(4px)}80%,100%{transform:translateY(0)}}
+.nt{animation:bob .6s infinite alternate}
+.mh{animation:rot 60s linear infinite;transform-origin:13px 13px}@keyframes rot{to{transform:rotate(360deg)}}
+.pf{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.8);animation:pf 2.2s infinite;top:62px}
+@keyframes pf{from{transform:translateY(0) scale(.6);opacity:.8}to{transform:translateY(-22px) scale(1.5);opacity:0}}
+.vig{inset:0;pointer-events:none;z-index:3;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.3))}
+.cnt::after{content:"";position:absolute;left:0;right:0;top:20px;height:3px;background:#d4a64a}
+.door::after{content:"";position:absolute;left:2px;top:56px;width:4px;height:12px;background:#d4a64a;border-radius:2px}
+.opn{animation:blink 2s infinite}
+.wn::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 47%,#1c1633 47% 53%,transparent 53%),linear-gradient(transparent 47%,#1c1633 47% 53%,transparent 53%)}
+.star{z-index:6;border:0;background:none;font-size:34px;cursor:pointer;animation:bob .5s infinite alternate;filter:drop-shadow(0 0 8px #ffd54a);padding:0}
+.cp{position:absolute;color:#ffe066;font:12px var(--hd);text-shadow:0 0 3px #1c1633,0 0 3px #1c1633;animation:cp 1.2s forwards;z-index:6;white-space:nowrap}
+@keyframes cp{to{transform:translateY(-28px);opacity:0}}
+#rush{left:0;right:0;margin:0 auto;width:max-content;top:6px;background:var(--red);color:#fff;font:11px var(--hd);padding:4px 10px;border-radius:12px;z-index:6;display:none;border:2px solid #fff}
+#rush.on{display:block}
+#scene.night::after{content:"";position:absolute;inset:0;background:rgba(10,20,60,.3);z-index:3;pointer-events:none}
+.cook.wk::after{content:"♨️";position:absolute;left:20px;top:-8px;font-size:14px}
+.tabs{display:flex;gap:6px;margin-top:10px}
+.tabs button{flex:1;padding:8px 4px;border:2px solid var(--line);background:none;color:var(--ink);border-radius:10px;font:700 13px var(--bd);cursor:pointer}
+.tabs .on{background:var(--yel);color:#1c1633;border-color:#1c1633}
+/* lijst */
+.ticket{background:var(--paper);margin-top:16px;padding:14px;border-radius:4px 4px 0 0;border:1px solid var(--line);border-bottom:0;padding-bottom:26px;
+ -webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%;mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) 50%/14px 100%}
+.ticket h2{font:19px var(--hd);margin:0}
+.bar{height:10px;background:var(--line);border-radius:6px;margin:10px 0 4px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok);width:0;transition:width .3s}
+.up{display:flex;gap:10px;align-items:center;padding:9px 0;border-top:2px dashed var(--line)}
+.up .e{font-size:26px}.up .t{flex:1;min-width:0}.up b{display:block}.up .sub{font-size:13px}
+.up button,#nieuw{border:0;border-radius:10px;background:var(--yel);color:#1c1633;font:700 15px var(--bd);padding:10px 12px;cursor:pointer;min-width:92px}
+.up button:disabled,#nieuw:disabled{opacity:.45;cursor:not-allowed}.up button.max{background:var(--ok);color:#fff;opacity:1}
+#klaar{display:none;margin-top:12px;padding:12px;background:var(--ok);color:#fff;border-radius:10px}#klaar p{margin:0 0 8px}#nieuw{width:100%;background:#fff;color:#1c5a35}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}.chips span{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:4px 10px;font-size:13px}
+.tools{display:flex;gap:8px;margin-top:16px}.tools button{flex:1;background:none;border:1px solid var(--mut);color:var(--ink);border-radius:10px;padding:9px;font:inherit;cursor:pointer}
+/* zakenman */
+#boss{position:fixed;left:0;right:0;bottom:calc(8px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:center;padding:0 12px;transform:translateY(130%);transition:transform .55s cubic-bezier(.2,1.2,.3,1);z-index:5}
+#boss.in{transform:none}
+#boss .av{font-size:44px;width:76px;height:76px;margin-bottom:-26px;z-index:1;background:var(--yel);border-radius:50%;display:grid;place-items:center;border:4px solid #1c1633;box-shadow:0 4px 12px rgba(0,0,0,.4)}
+#boss.in .av{animation:hop 1s ease-in-out infinite alternate}@keyframes hop{to{transform:translateY(-8px) rotate(-4deg)}}
+#boss .bub{width:100%;max-width:400px;background:#fff;color:#1c1633;border:3px solid #1c1633;border-radius:16px;padding:30px 12px 10px;font-size:14px;line-height:1.35;box-shadow:0 4px 0 rgba(0,0,0,.25);max-height:45vh;overflow:auto}
+#boss .bub b{display:block;font:12px var(--hd);color:var(--red);margin-bottom:2px}
+#bok{margin-top:8px;border:0;background:var(--red);color:#fff;border-radius:10px;padding:7px 16px;font:700 14px var(--bd);cursor:pointer}
+.ch{display:block;width:100%;text-align:left;margin-top:8px;border:2px solid #1c1633;background:var(--yel);color:#1c1633;border-radius:12px;padding:7px 10px;font:700 14px var(--bd);cursor:pointer}
+.ch small{display:block;font-weight:400;font-size:12px}
+button:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){.cu,.sc,.w,.st,.dt,.jb i,#boss.in .av{animation:none}#boss{transition:none}}
+/* thema */
+html{background:#fbf1ff}
+body{background:radial-gradient(700px 420px at 8% -4%,#ffe0bd,transparent 62%),radial-gradient(760px 520px at 100% 6%,#d4e2ff,transparent 62%),radial-gradient(700px 520px at 50% 105%,#ffd0e2,transparent 62%),#fbf1ff;background-attachment:fixed;color:var(--ink);font-family:var(--bd)}
+main{max-width:600px;padding:16px 12px 230px}
+header{margin-bottom:12px}
+h1{display:flex;align-items:center;gap:12px;margin:0;font:700 30px/1 var(--hd);color:var(--ink)}
+.wm{display:block;background:linear-gradient(90deg,#ff5a4a,#ff9a2e);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:.3px}
+.tag{display:block;font:700 12px var(--bd);color:var(--mut);margin-top:3px;letter-spacing:.2px}
+.lg{display:grid;place-items:center;width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#ffe08a,#ffb627);box-shadow:0 4px 0 #d98e00,0 10px 18px rgba(255,182,39,.35),inset 0 2px 0 rgba(255,255,255,.7);font-size:26px;transform:rotate(-6deg)}
+.hr{display:flex;align-items:center;gap:8px}
+#ownerTag{background:#fff;color:var(--mut);border-radius:999px;padding:6px 14px;font:800 13px var(--bd);box-shadow:0 4px 12px rgba(90,50,140,.14)}
+#snd{width:42px;height:42px;border-radius:50%;border:0;background:#fff;font-size:18px;cursor:pointer;box-shadow:0 4px 12px rgba(90,50,140,.14)}
+.rib{position:relative;z-index:3;width:max-content;max-width:92%;margin:0 auto -9px;padding:6px 24px;font:700 17px var(--hd);color:#fff;background:linear-gradient(180deg,#ff7a63,#ff4f3f);border-radius:12px;box-shadow:0 4px 0 #c93a2c,0 8px 14px rgba(255,79,63,.3),inset 0 2px 0 rgba(255,255,255,.4);text-shadow:0 2px 0 rgba(0,0,0,.18);white-space:nowrap}
+#sw{border:6px solid #fff;border-radius:26px;background:#fff;box-shadow:0 14px 34px rgba(90,50,140,.28);margin-top:0}
+#scene{border:0;border-radius:0}
+.hud{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.hud span{background:#fff;border-radius:999px;padding:5px 12px;font:800 13px var(--bd);color:var(--ink);box-shadow:0 3px 10px rgba(90,50,140,.12);font-variant-numeric:tabular-nums}
+.hud .g{background:#c9f5e3}.hud .y{background:#ffefb8}.hud .r{background:#ffc9c0}
+.dock{position:sticky;top:8px;z-index:9;display:flex;gap:12px;align-items:center;margin:12px 0 12px;padding:12px 14px 12px 18px;border-radius:26px;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:2px solid #fff;box-shadow:0 12px 30px rgba(90,50,140,.22),inset 0 2px 0 #fff}
+.st{display:flex;flex-wrap:wrap;gap:0 20px;flex:1;min-width:0;align-items:end}
+.st>div{min-width:0}.st small{display:block;font:700 11px var(--bd);color:var(--mut);letter-spacing:.2px}
+.st b{display:block;font:700 28px/1.1 var(--hd);color:var(--ink);font-variant-numeric:tabular-nums}
+.st #ink{color:#12a37f}
+#bonus{flex-basis:100%;font-weight:800;color:var(--mut)}#bonus:empty{display:none}
+#sell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;width:92px;height:92px;flex:none;border:0;border-radius:50%;background:radial-gradient(circle at 35% 28%,#ff9a85,#ff4f3f 60%,#e03a2c);color:#fff;font:700 15px/1 var(--hd);box-shadow:0 6px 0 #b82f23,0 14px 24px rgba(255,79,63,.4),inset 0 3px 0 rgba(255,255,255,.45);padding:0;cursor:pointer;touch-action:manipulation;user-select:none;-webkit-user-select:none}
+#sell::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:3px solid rgba(255,79,63,.45);animation:rng 1.8s infinite;pointer-events:none}
+@keyframes rng{from{transform:scale(.94);opacity:1}to{transform:scale(1.2);opacity:0}}
+#sell:active{transform:translateY(5px);box-shadow:0 1px 0 #b82f23,0 6px 12px rgba(255,79,63,.4),inset 0 3px 0 rgba(255,255,255,.45)}
+.bi{display:block;font-size:32px;line-height:1;transition:transform .1s}#sell:active .bi{transform:scale(.86) rotate(-10deg)}
+#pv{display:block;font:800 11px var(--bd);color:#fff3c4;margin-top:2px}
+.pop{right:14px;top:-6px;color:#fff;font:700 15px var(--hd);text-shadow:0 0 4px #b82f23,0 0 4px #b82f23}
+.goal{display:flex;gap:12px;align-items:center;padding:10px 16px 10px 12px;margin:0 0 14px;border-radius:22px;background:linear-gradient(135deg,#7a5cff,#a15bff);color:#fff;box-shadow:0 10px 22px rgba(122,92,255,.35),inset 0 2px 0 rgba(255,255,255,.3)}
+.gav{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:#ffd66b;font-size:25px;flex:none;border:3px solid #fff}
+.goal small{display:block;font:700 11px var(--bd);opacity:.85;letter-spacing:.3px}
+.goal b{display:block;font:600 15px/1.25 var(--bd)}
+.ticket{background:rgba(255,255,255,.93);border:2px solid #fff;border-radius:28px;box-shadow:0 14px 34px rgba(90,50,140,.18),inset 0 2px 0 #fff;padding:18px;-webkit-mask:none;mask:none;margin:0}
+.th{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.ticket h2{font:700 25px var(--hd);margin:0;color:var(--ink)}
+.ticket .sub{color:var(--mut);font-weight:700;font-size:13px}
+.ring{--p:0%;width:56px;height:56px;border-radius:50%;background:conic-gradient(#2ec4a0 var(--p),#eadff5 0);display:grid;place-items:center;flex:none}
+.ring span{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:#fff;font:700 13px var(--hd);color:var(--ink)}
+.tabs{display:flex;gap:4px;background:#f1e9fa;border:0;border-radius:18px;padding:4px;margin:14px 0 0}
+.tabs button{flex:1;border:0;border-radius:14px;background:none;color:#7a6890;padding:11px 2px;font:700 13px var(--bd);cursor:pointer}
+.tabs .on{background:#fff;color:var(--ink);box-shadow:0 4px 10px rgba(90,50,140,.18)}
+.bulk{display:flex;gap:6px;margin:12px 0 4px;align-items:center}
+.bulk button{border:0;background:#f1e9fa;color:#5a4872;border-radius:999px;padding:7px 14px;font:800 13px var(--bd);cursor:pointer}
+.bulk .on{background:#7a5cff;color:#fff}
+.bulk #all{margin-left:auto;background:linear-gradient(180deg,#5ee0b8,#2ec4a0);color:#06432f;box-shadow:0 3px 0 #1f9c80}
+.up{position:relative;display:flex;gap:12px;align-items:center;background:#fff;border:2px solid #f1e9fa;border-radius:20px;padding:12px 12px 12px 16px;margin-top:10px;box-shadow:0 4px 14px rgba(90,50,140,.1);overflow:hidden}
+.up::before{content:"";position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--gc,#7a5cff)}
+.up.g-staff{--gc:#4ea8ff;--gt:linear-gradient(145deg,#a5d8ff,#4ea8ff)}.up.g-rest{--gc:#ff6b8a;--gt:linear-gradient(145deg,#ffb3c3,#ff6b8a)}.up.g-kit{--gc:#ff9a2e;--gt:linear-gradient(145deg,#ffd9a0,#ff9a2e)}
+.up.can{border-color:#ffd66b;box-shadow:0 0 0 3px rgba(255,182,39,.5),0 10px 22px rgba(255,182,39,.25);animation:pulse 2s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 5px rgba(255,182,39,.28),0 10px 22px rgba(255,182,39,.25)}}
+.up .e{display:grid;place-items:center;width:50px;height:50px;border-radius:16px;background:var(--gt);font-size:25px;flex:none;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),0 3px 0 rgba(0,0,0,.12);border:0}
+.up b{font:700 16px var(--bd);color:var(--ink)}
+.up .sub{display:block;color:var(--mut);font-weight:700;font-size:12.5px;line-height:1.3}
+.dots{display:flex;gap:4px;margin-top:7px}.dots i{width:15px;height:6px;border-radius:3px;background:#eadff5}.dots i.on{background:var(--gc)}
+.up button,#nieuw{min-width:96px;border:0;border-radius:14px;background:linear-gradient(180deg,#ffd66b,#ffb627);color:#4a2c00;box-shadow:0 4px 0 #d98e00,0 8px 14px rgba(255,182,39,.3),inset 0 2px 0 rgba(255,255,255,.6);font:700 15px/1.15 var(--hd);padding:9px 12px;cursor:pointer;text-shadow:0 1px 0 rgba(255,255,255,.4)}
+.up button small{display:block;font:700 11px var(--bd);opacity:.7}
+.up button:active:not(:disabled){transform:translateY(3px);box-shadow:0 1px 0 #d98e00}
+.up button:disabled{background:#efe9f6;color:#a79bb8;box-shadow:0 4px 0 #d8cde6;text-shadow:none;cursor:not-allowed;opacity:1}
+.up button.max{background:linear-gradient(180deg,#6be3c0,#2ec4a0);color:#06432f;box-shadow:0 4px 0 #1f9c80;text-shadow:none}
+#klaar{background:linear-gradient(135deg,#5ee0b8,#2ec4a0);border:0;border-radius:20px;color:#06432f;font-weight:800;margin-top:14px;box-shadow:0 8px 18px rgba(46,196,160,.35)}
+#nieuw{width:100%;background:#fff;color:#0b6b52;box-shadow:0 4px 0 #1f9c80;text-shadow:none}#nieuw:disabled{opacity:.65}
+.chips{margin-top:16px}.chips span{background:#fff;color:var(--ink);border-radius:999px;font-weight:800;box-shadow:0 3px 10px rgba(90,50,140,.12);border:0;padding:5px 12px}
+.tools button{background:rgba(255,255,255,.9);color:#5a4872;border:2px solid #fff;border-radius:16px;font:700 14px var(--bd);box-shadow:0 4px 12px rgba(90,50,140,.12);padding:11px}
+.hint{color:#8a79a3;font-size:12px;font-weight:700;text-align:center;margin:14px 0 0}
+@media (hover:none){.hint{display:none}}
+.cf{top:-20px;font-size:20px;z-index:7;pointer-events:none;animation:cf 1.8s ease-in forwards}
+@keyframes cf{to{transform:translateY(300px) rotate(540deg);opacity:0}}
+#boss .bub{background:#fff;color:var(--ink);border:3px solid #7a5cff;border-radius:22px;box-shadow:0 12px 30px rgba(90,50,140,.35)}
+#boss .bub b{color:#7a5cff;font:600 13px var(--hd)}
+#boss .av{background:linear-gradient(145deg,#ffe08a,#ffb627);border:4px solid #fff;box-shadow:0 8px 20px rgba(90,50,140,.35)}
+#bok{background:linear-gradient(#a58bff,#7a5cff);box-shadow:0 3px 0 #5a3fd1;border-radius:12px;color:#fff;border:0}
+.ch{background:#f6f0ff;border:2px solid #d9ccff;border-radius:14px;color:var(--ink);box-shadow:none}
+.ch:hover{background:#ebe0ff}
+@media (min-width:1000px){main{max-width:1140px;display:grid;grid-template-columns:560px 1fr;gap:0 26px;align-items:start;padding-bottom:50px}#head{grid-column:1/-1}#sw,.rib,#info,.dock,.goal,.chips,.tools,.hint{grid-column:1}.ticket{grid-column:2;grid-row:2/span 10}.dock{top:12px}}
+@media (prefers-reduced-motion:reduce){.up.can,#sell::after{animation:none}}
+</style></head><body><main>
+<header id="head"><h1><span class="lg">🍟</span><span><span class="wm">Frietimperium</span><small class="tag">Bouw je eigen fastfoodketen</small></span></h1><div class="hr"><span id="ownerTag"></span><button id="snd" aria-label="Geluid aan of uit">🔊</button></div></header>
+<div class="rib" id="rib"></div><div id="sw"><div id="scene"><div id="stat"></div><div id="act"></div><div id="dtw"></div><div id="rush">🍽️ LUNCHDRUKTE! Inkomen ×1,5</div></div></div>
+<div id="info" class="hud"></div>
+<div class="dock"><div class="st"><div><small>💰 Kasgeld</small><b id="geld">€0</b></div><div><small>⚡ Per seconde</small><b id="ink">€0</b></div><small id="bonus"></small></div><button id="sell"><span class="bi">🍔</span>Tik!<span id="pv"></span></button></div>
+<div class="goal"><span class="gav">🧑‍💼</span><div><small>Volgende doel</small><b id="gtx"></b></div></div>
+<section class="ticket">
+ <div class="th"><div><h2 id="naam"></h2><div class="sub" id="sub"></div></div><div class="ring" id="ring"><span id="rp">0%</span></div></div>
+ <div class="tabs" id="tabs"></div>
+ <div class="bulk" id="bulk"><button id="bk1" data-b="1">×1</button><button id="bk5" data-b="5">×5</button><button id="bkmax" data-b="max">MAX</button><button id="all">⚡ Alles kopen</button></div>
+ <div id="ups"></div>
+ <div id="klaar"><p id="klaarTxt"></p><button id="nieuw"></button></div>
+</section>
+<div class="chips" id="chips"></div>
+<div class="tools"><button id="roep">🧑‍💼 Zakenman roepen</button><button id="reset">↺ Opnieuw beginnen</button></div>
+<p class="hint">Spatie = tikken (ingedrukt houden herhaalt) · 1 2 3 = tabs · B = alles kopen</p>
+</main>
+<div id="boss" aria-live="polite"><div class="av">🧑‍💼</div><div class="bub"><b>Meneer Van Dijk, investeerder</b><span id="bt"></span><div id="bch"></div><button id="bok">Begrepen</button></div></div>
+<script>
+const NAMES=["Frietkraam","Burgertent","Pizzeria","Kipgrill","Sushi-bar","Drive-in Paleis"],ICON=["🍟","🍔","🍕","🍗","🍣","🏰"];
+const WALL=["#f0b3aa","#e2c19a","#b7dcc2","#f5d596","#b6cfee","#d6c0ec"];
+const G=[["staff","Medewerkers"],["rest","Restaurant"],["kit","Keuken"]];
+const UP=[
+{k:"kok",g:"staff",n:"Extra kok",e:"👨‍🍳",c:10,m:1,d:"meer koks"},
+{k:"train",g:"staff",n:"Kooktraining",e:"⚡",c:60,m:2,d:"koks werken sneller"},
+{k:"serv",g:"staff",n:"Bediening",e:"🤵",c:400,m:3,d:"klanten wachten langer"},
+{k:"mgr",g:"staff",n:"Manager",e:"👔",c:4000,m:10,d:"iedereen sneller"},
+{k:"tbl",g:"rest",n:"Extra tafel",e:"🪑",c:300,m:5,d:"meer zitplaatsen"},
+{k:"kas",g:"rest",n:"Kassa",e:"💳",c:700,m:8,d:"langere rij mogelijk"},
+{k:"rec",g:"rest",n:"Reclame",e:"📣",c:1500,m:12,d:"meer klanten"},
+{k:"sf",g:"rest",n:"Sfeerverlichting",e:"💡",c:2500,m:18,d:"meer klanten en geduld"},
+{k:"jb",g:"rest",n:"Jukebox",e:"📻",c:5500,m:28,d:"meer klanten"},
+{k:"drv",g:"rest",n:"Drive-through",e:"🚗",c:12000,m:45,d:"auto's bestellen bij het loket"},
+{k:"sc",g:"rest",n:"Bezorgscooters",e:"🛵",c:28000,m:70,d:"meer bestellingen"},
+{k:"fry",g:"kit",n:"Frituur",e:"🍟",c:40,m:2,d:"sneller frituren"},
+{k:"grill",g:"kit",n:"Grill",e:"🍔",c:150,m:3,d:"sneller grillen"},
+{k:"warm",g:"kit",n:"Warmhoudplaat",e:"🥘",c:900,m:6,d:"bestellingen sneller klaar"},
+{k:"mod",g:"kit",n:"Moderne keuken",e:"🤖",c:6000,m:15,d:"veel sneller koken"}];
+const IX={},PV=UP.map((u,i)=>{IX[u.k]=i;for(let j=i-1;j>=0;j--)if(UP[j].g==u.g)return j;return -1});
+const MAX=6,KEY="frietimperium-v3",$=id=>document.getElementById(id);
+const fresh=()=>({money:0,tier:0,lv:UP.map(()=>0),locked:0,done:[],intro:false,perm:0,buff:null,deco:[],tab:"staff"});
+let S=fresh();
+try{const x=JSON.parse(localStorage.getItem(KEY));if(x&&x.lv&&x.lv.length==UP.length)S=x}catch(e){}
+S.tab=S.tab||"staff";S.bulk=S.bulk||1;
+let hide,tw,li=-1,pend=null,lastD=-1;
+const lv=k=>S.lv[IX[k]];
+const bs=t=>Math.pow(5,t),cs=t=>Math.pow(8,t),nm=t=>NAMES[t]||"Wereldketen "+(t-5),ic=t=>ICON[t]||"🌍";
+const cost=i=>Math.round(UP[i].c*cs(S.tier)*Math.pow(1.25,S.lv[i]));
+const own=()=>bs(S.tier)*(0.5+S.lv.reduce((a,l,i)=>a+l*UP[i].m,0));
+const bm=()=>S.buff&&Date.now()<S.buff.until?S.buff.m:1;
+const inc=()=>(own()+S.locked)*(1+S.perm)*bm()*sat()*(Date.now()<SM.rush?1.5:1);
+const clk=()=>bs(S.tier)+inc()*0.1/(1+0.4*S.tier);
+const maxed=()=>S.lv.every(l=>l>=MAX),openCost=()=>60000*cs(S.tier);
+const vis=i=>PV[i]<0||S.lv[PV[i]]>=1;
+const plan=i=>{const l=S.lv[i],c0=UP[i].c*cs(S.tier),cj=j=>Math.round(c0*Math.pow(1.25,l+j)),rem=MAX-l;let n=0,t=0;if(S.bulk==="max"){while(n<rem&&t+cj(n)<=S.money){t+=cj(n);n++}if(!n){n=1;t=cj(0)}}else{n=Math.min(+S.bulk||1,rem);for(let j=0;j<n;j++)t+=cj(j)}return{n,total:t}};
+const cooks=()=>1+Math.min(4,lv("kok")),spd=()=>(1+.2*lv("train"))*(1+.08*(lv("fry")+lv("grill")+lv("warm")+lv("mod")))*(1+.04*lv("mgr")),cookT=()=>6/spd();
+const dem=()=>1+.3*lv("tbl")+.8*lv("rec")+.5*lv("sf")+.5*lv("jb")+.7*lv("sc"),cInt=()=>Math.max(1,8/dem()/(Date.now()<SM.rush?2:1));
+const pat=()=>16*(1+.12*lv("serv"))*(1+.05*lv("sf")),qmax=()=>4+lv("kas"),ntb=()=>Math.min(8,2+lv("tbl")),dInt=()=>14/(1+.5*(lv("drv")-1));
+const fmt=n=>{const s=["","K","M","B","T","Q"];let i=0;while(n>=1000&&i<5){n/=1000;i++}return "€"+n.toLocaleString("nl",{maximumFractionDigits:n<100?1:0})+(s[i]?" "+s[i]:"")};
+const rep=(c,f)=>Array.from({length:c},(_,k)=>f(k)).join("");
+function build(){
+ $("naam").textContent=ic(S.tier)+" "+nm(S.tier);$("rib").textContent=ic(S.tier)+" "+nm(S.tier);
+ $("tabs").innerHTML=G.map(([g,t])=>`<button data-t="${g}" id="t${g}">${t}</button>`).join("");
+ $("ups").innerHTML=UP.map((u,i)=>`<div class="up g-${u.g}" id="r${i}"><span class="e">${u.e}</span><div class="t"><b>${u.n}</b><span class="sub" id="d${i}"></span><div class="dots" id="p${i}">${"<i></i>".repeat(MAX)}</div></div><button data-i="${i}" id="b${i}"></button></div>`).join("");
+ $("chips").innerHTML=S.done.map(d=>`<span>${d.i} ${d.n}: ${fmt(d.v)}/s</span>`).join("");
+ $("ownerTag").textContent="Bedrijf "+(S.tier+1);resetSim();scene();update()}
+function update(){
+ $("geld").textContent=fmt(S.money);$("pv").textContent="+"+fmt(clk());$("snd").textContent=S.snd===0?"🔇":"🔊";["1","5","max"].forEach(b=>$("bk"+b).className=String(S.bulk)===b?"on":"");$("ink").textContent=fmt(inc());
+ const left=S.buff&&Date.now()<S.buff.until?Math.ceil((S.buff.until-Date.now())/1000):0,o=SM.out,pc=o.length?Math.round(o.reduce((a,b)=>a+b,0)/o.length*100):100;
+ $("bonus").textContent=(S.perm?"⭐ Reputatie +"+Math.round(S.perm*100)+"%":"")+(left?" · "+S.buff.m+"× nog "+left+"s":"");
+ $("info").innerHTML=`<span class="${pc>=75?"g":pc>=45?"y":"r"}">${pc>=75?"😄":pc>=45?"😐":"😠"} ${pc}%</span><span>🧑‍🍳 ${cooks()} koks</span><span>⏱️ ${cookT().toFixed(1)}s</span><span>👥 elke ${cInt().toFixed(1)}s</span><span>🧾 ${S.served||0}</span>`;$("gtx").textContent=nextGoal();
+ const tot=S.lv.reduce((a,b)=>a+b,0),aff={};const pr=Math.round(tot/(MAX*UP.length)*100);$("ring").style.setProperty("--p",pr+"%");$("rp").textContent=pr+"%";
+ $("sub").textContent=`Upgrades: ${tot} van ${MAX*UP.length} · eigen inkomen ${fmt(own())}/s`;
+ UP.forEach((u,i)=>{const b=$("b"+i),l=S.lv[i];const pd=$("p"+i);if(pd._l!==l){pd._l=l;[...pd.children].forEach((d,k)=>d.className=k<l?"on":"")}$("r"+i).style.display=u.g===S.tab&&(vis(i)||vis(PV[i]))?"flex":"none";
+  if(!vis(i)){b.textContent="🔒";b.className="";b.disabled=true;$("d"+i).textContent="Koop eerst: "+UP[PV[i]].n;return}
+  $("d"+i).textContent=l?`Niveau ${l}/${MAX} · +${fmt(bs(S.tier)*u.m)}/s · ${u.d}`:`Eenmalig starten · ${u.d}`;
+  if(l>=MAX){b.textContent="Max";b.className="max";b.disabled=true;$("r"+i).classList.remove("can")}else{const q=plan(i);b.innerHTML=fmt(q.total)+(q.n>1?`<small>×${q.n}</small>`:"");b.className="";b.disabled=S.money<q.total;$("r"+i).classList.toggle("can",!b.disabled);if(!b.disabled)aff[u.g]=1}});
+ G.forEach(([g,t])=>{const e=$("t"+g);e.className=g===S.tab?"on":"";e.textContent=t+(aff[g]?" •":"")});
+ const k=maxed();$("klaar").style.display=k?"block":"none";
+ if(k){$("klaarTxt").textContent=`${nm(S.tier)} is volledig opgewaardeerd! Je behoudt ${fmt(own())}/s voor altijd.`;
+  $("nieuw").textContent=`Open ${nm(S.tier+1)} voor ${fmt(openCost())}`;$("nieuw").disabled=S.money<openCost()}}
+const tp=k=>[58+11*(k%4),k<4?96:152],hm=i=>[3+6*i,112],bub=(c,t)=>{if(!c.car)c.el.lastChild.textContent=t};
+const svg=(w,h,b)=>`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}">${b}</svg>`;
+const SK=["#f1c9a5","#e0ac84","#c68a62","#8d5a3b","#f6d6bd"],HR=["#2b1b12","#6b3f1d","#d9a441","#1d1d1d","#a33a22"],SH=["#e63946","#457b9d","#2a9d8f","#f4a261","#8d5fd3","#e76f9a"];
+const pplSvg=(i,sh)=>{const sk=SK[i%5],hr=HR[(i*3)%5],c=sh||SH[i%6],ps=["#2f3e5c","#4a3b32","#2d2d2d"][i%3];
+ return svg(26,40,`<rect class="lg1" x="8" y="26" width="4" height="12" rx="2" fill="${ps}"/><rect class="lg2" x="14" y="26" width="4" height="12" rx="2" fill="${ps}"/><rect x="6" y="15" width="14" height="14" rx="5" fill="${c}"/><rect class="arm a1" x="2.5" y="16" width="4" height="11" rx="2" fill="${c}"/><rect class="arm a2" x="19.5" y="16" width="4" height="11" rx="2" fill="${c}"/><circle class="hh" cx="13" cy="9" r="7.5" fill="${sk}"/><path d="M5.5 8a7.5 7.5 0 0 1 15 0c-3-2-11-2-15 0z" fill="${hr}"/><circle cx="10.3" cy="9.8" r="1" fill="#1c1633"/><circle cx="15.7" cy="9.8" r="1" fill="#1c1633"/><path class="br" d="M8.8 6.4h3M14.2 6.4h3" stroke="#1c1633" stroke-width="1.2" fill="none" stroke-linecap="round"/><path class="mo" d="M10 13q3 2.2 6 0" stroke="#1c1633" stroke-width="1.2" fill="none" stroke-linecap="round"/>`)};
+const cookSvg=i=>{const sk=SK[(i+1)%5],tr=["#3b3f6b","#8a2a2a","#2f6b3b"][i%3],w='fill="#fff" stroke="#d0d0d0"';
+ return svg(30,44,`<rect class="lg1" x="9" y="30" width="5" height="13" rx="2" fill="#3a3a3a"/><rect class="lg2" x="16" y="30" width="5" height="13" rx="2" fill="#3a3a3a"/><rect x="7" y="17" width="16" height="16" rx="5" ${w}/><circle cx="12" cy="23" r="1" fill="#999"/><circle cx="12" cy="28" r="1" fill="#999"/><path d="M10 18l5 4 5-4z" fill="${tr}"/><rect class="arm a1" x="2.5" y="18" width="5" height="12" rx="2.5" ${w}/><rect class="arm a2" x="22.5" y="18" width="5" height="12" rx="2.5" ${w}/><path class="tool" d="M26 30l4-9" stroke="#888" stroke-width="2"/><circle class="hh" cx="15" cy="12" r="6.5" fill="${sk}"/><path d="M8 9q-4-5 1-8 3-2 6-1 3-1 6 1 5 3 1 8z" ${w}/><circle cx="12.5" cy="12.5" r="1" fill="#1c1633"/><circle cx="17.5" cy="12.5" r="1" fill="#1c1633"/><path d="M11.5 15.5q3.5 2.5 7 0" stroke="#1c1633" stroke-width="1.2" fill="none"/>`)};
+const carSvg=i=>{const c=["#e63946","#457b9d","#f4a261","#2a9d8f","#8d5fd3"][i%5];return svg(40,26,`<rect x="1" y="11" width="38" height="9" rx="3" fill="${c}"/><path d="M8 11l4-8h14l6 8z" fill="${c}"/><path d="M12 10l3-5h5v5zM22 10V5h4l4 5z" fill="#cfe9f7"/><circle cx="17" cy="7.5" r="2" fill="#f1c9a5"/><circle cx="10" cy="20" r="4.5" fill="#222"/><circle cx="30" cy="20" r="4.5" fill="#222"/><circle cx="10" cy="20" r="1.6" fill="#bbb"/><circle cx="30" cy="20" r="1.6" fill="#bbb"/><rect x="1" y="13" width="3" height="3" fill="#ffd54a"/>`)};
+const FR=svg(28,34,`<rect x="1" y="12" width="26" height="20" rx="3" fill="#b8c0c6" stroke="#5b6369"/><rect x="4" y="15" width="20" height="9" rx="2" fill="#e8a317"/><circle class="bb" cx="9" cy="19" r="1.6" fill="#fff6c8"/><circle class="bb b2" cx="17" cy="18" r="1.3" fill="#fff6c8"/><path d="M6 15V6H3M22 15V6h3" stroke="#333" stroke-width="2" fill="none"/>`);
+const GR=svg(34,34,`<rect x="1" y="14" width="32" height="18" rx="3" fill="#3a3f44"/><rect x="4" y="16" width="26" height="5" fill="#ff7a1f"/><path d="M8 16v5M14 16v5M20 16v5M26 16v5" stroke="#222"/><ellipse cx="11" cy="14" rx="5" ry="2.5" fill="#6b3a1d"/><ellipse cx="23" cy="14" rx="5" ry="2.5" fill="#7b4521"/><path class="fl2" d="M6 16q2-6 4 0zM20 16q2-7 4 0z" fill="#ffd23f"/>`);
+const WM=svg(36,26,`<rect x="2" y="14" width="32" height="8" rx="2" fill="#aab3b9"/><rect x="5" y="10" width="26" height="5" rx="2" fill="#e38b2c"/><path d="M8 4h20l-3 5H11z" fill="#d94a2b"/><rect class="gl" x="10" y="9" width="16" height="2" fill="#ffd54a"/>`);
+const MD=svg(32,34,`<rect x="1" y="2" width="30" height="30" rx="4" fill="#cfd6dc" stroke="#5b6369"/><rect x="5" y="6" width="22" height="14" rx="2" fill="#1d2b2f"/><circle class="gl" cx="16" cy="13" r="4" fill="#4cd964"/><rect x="6" y="23" width="6" height="4" fill="#e63946"/><rect x="14" y="23" width="12" height="4" fill="#fff"/>`);
+const RG=svg(30,26,`<rect x="1" y="12" width="28" height="12" rx="2" fill="#3b4148"/><rect x="4" y="3" width="14" height="9" rx="1" fill="#9fe3a2"/><text x="11" y="10.5" font-size="7" text-anchor="middle" fill="#134">€</text><rect class="rc" x="20" y="1" width="6" height="9" fill="#fff"/><path d="M5 16h4M11 16h4M17 16h4M23 16h3" stroke="#ddd" stroke-width="2"/><rect x="3" y="20" width="24" height="3" fill="#222"/>`);
+const VT=svg(44,30,`<rect x="1" y="6" width="42" height="22" rx="3" fill="#dff3ff" fill-opacity=".6" stroke="#5b6369"/><ellipse cx="11" cy="23" rx="6" ry="3" fill="#c98b4a"/><ellipse cx="11" cy="20" rx="6" ry="2" fill="#6b3a1d"/><ellipse cx="11" cy="18" rx="6" ry="2" fill="#7cc04a"/><ellipse cx="11" cy="16" rx="6" ry="2.5" fill="#d9964f"/><rect x="25" y="17" width="14" height="8" fill="#f4a6c0"/><circle cx="32" cy="16" r="2" fill="#e63946"/>`);
+const BG=svg(22,26,`<path d="M3 8h16l-1 16H4z" fill="#c58a4a"/><path d="M7 8q4-8 8 0" stroke="#5d3a18" fill="none" stroke-width="2"/>`);
+const JK=svg(26,42,`<path d="M2 40V12a11 11 0 0 1 22 0v28z" fill="#8d1f3a"/><path d="M5 38V13a8 8 0 0 1 16 0v25z" fill="#ffb703"/><circle class="gl" cx="13" cy="14" r="5" fill="#ff5d8f"/><rect x="7" y="24" width="12" height="9" rx="2" fill="#1c1633"/><path class="nt" d="M24 8V2l4-1" stroke="#fff" fill="none" stroke-width="2"/>`);
+const LP=svg(24,44,`<path d="M12 0v10" stroke="#1c1633"/><path d="M5 44L-4 24h32l-9 20z" fill="#fff6a0" opacity=".28"/><path d="M3 22q9-14 18 0z" fill="#ffb703" stroke="#1c1633"/>`);
+const PL=svg(28,34,`<path d="M6 22h16l-2 11H8z" fill="#c0603a"/><path d="M14 22Q4 14 8 4q6 6 6 18zM14 22q0-14 8-18 4 10-8 18z" fill="#3a9d4a"/>`);
+const PO=svg(30,34,`<rect x="1" y="1" width="28" height="32" fill="#fff8e1" stroke="#5d3a18" stroke-width="3"/><path d="M7 15a8 8 0 0 1 16 0z" fill="#d9964f"/><rect x="7" y="15" width="16" height="3" fill="#6b3a1d"/><rect x="7" y="18" width="16" height="2" fill="#7cc04a"/><path d="M7 20h16v2a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2z" fill="#d9964f"/>`);
+const CL=svg(26,26,`<circle cx="13" cy="13" r="12" fill="#fff" stroke="#1c1633" stroke-width="2"/><path class="mh" d="M13 13V5" stroke="#1c1633" stroke-width="2"/><path d="M13 13h5" stroke="#e63946" stroke-width="2"/>`);
+const TB=c=>svg(40,44,`<rect x="0" y="12" width="5" height="18" rx="2" fill="#5d3a18"/><rect x="35" y="12" width="5" height="18" rx="2" fill="#5d3a18"/><ellipse cx="20" cy="14" rx="18" ry="6" fill="#c58a4a" stroke="#5d3a18" stroke-width="2"/><ellipse cx="20" cy="14" rx="12" ry="3.5" fill="#fff" opacity=".35"/><rect x="18" y="19" width="4" height="16" fill="#5d3a18"/><ellipse cx="20" cy="36" rx="9" ry="3" fill="#5d3a18"/>${c?'<rect x="19" y="6" width="2" height="7" fill="#fff"/><path class="fl2" d="M20 1q2 3 0 5q-2-2 0-5" fill="#ffb703"/>':""}`);
+function scene(){
+ const t=S.tier,n=k=>li===IX[k]?" new":"",L=lv,A=(x,y,b,c)=>`<div class="ap${c||""}" style="left:${x};top:${y}px">${b}</div>`;
+ let h=`<div class="wall"></div><div class="wains"></div><div class="kitw"></div><div class="kfl"></div><div class="fl"></div>${L("sf")>=3?'<div class="glowL"></div>':""}<div class="vig"></div>`;
+ h+=`<div class="sgn${L("rec")>=4?" glow":""}${n("rec")}">${ic(t)} ${nm(t)}</div><div class="hood"></div><div class="menu">MENU<br>${ic(t)} €${3+t*2},50 · 🥤 €2,00</div><div class="bsp"></div>`;
+ h+=(L("warm")||L("mod")?'<div class="shf"></div>':"")+(L("warm")?A("23%",48,WM,n("warm")):"")+(L("mod")?A("38%",40,MD,n("mod")):"");
+ h+=A("22%",66,rep(Math.min(2,Math.ceil(L("fry")/2)),()=>FR),n("fry"))+A("38%",66,rep(Math.min(2,Math.ceil(L("grill")/2)),()=>GR),n("grill"));
+ if(L("fry")+L("grill"))h+=rep(3,k=>`<i class="pf" style="left:${25+k*8}%;animation-delay:${k*.7}s"></i>`);
+ h+=(L("mgr")?A("48%",110,pplSvg(2,"#222"),n("mgr")):"")+(L("drv")?`<div class="dsg${n("drv")}">DRIVE</div>`:A("8%",60,CL));
+ h+=`<div class="cnt"></div>`+A("47%",128,RG,n("kas"))+(L("kas")>=2?A("8%",124,VT,n("kas")):"")+(L("sc")?A("36%",128,BG,n("sc")):"")+(L("rec")?`<div class="ban${n("rec")}">2 VOOR 1!</div>`:"");
+ h+=rep(Math.min(3,L("sf")),k=>A(`calc(${57+14*k}% - 12px)`,0,LP,n("sf")));
+ h+=`<div class="wn" style="left:58%">${L("sc")?'<span class="sc">🛵</span>':""}</div><div class="wn" style="left:80%"></div>`+(L("rec")>=2?A("71%",10,PO,n("rec")):"")+(L("jb")?A("52.5%",80,JK,n("jb")):"");
+ h+=(S.deco.length?`<div class="shfr"></div><div class="dec">${S.deco.join(" ")}</div>`:"")+`<div class="door"></div><div class="opn">OPEN</div><div class="mat"></div>`+A("1.5%",204,PL)+(L("sf")>=2?A("51%",212,PL):"");
+ h+=rep(ntb(),k=>{const[x,y]=tp(k);return `<div class="tb${k==ntb()-1?n("tbl"):""}" style="left:calc(${x}% - 7px);top:${y+16}px">${TB(L("sf")>=2)}</div>`});
+ const sc=$("scene");sc.style.setProperty("--wl",WALL[t%6]);$("stat").innerHTML=h;$("dtw").classList.toggle("on",L("drv")>0);
+ if(li>=0){sc.classList.remove("bump");void sc.offsetWidth;sc.classList.add("bump")}li=-1}
+function fit(){const w=$("sw").clientWidth,k=Math.min(1.1,(w||540)/540);$("scene").style.transform=`scale(${k})`;$("sw").style.height=(Math.round(262*k)+12)+"px"}
+/* simulatie: koks en klanten */
+const SM={q:[],cq:[],o:[],ck:[],tb:[],out:[],sp:2,dp:6,n:0,wt:null,wtT:0};
+const pl=(e,x,y)=>{if(e._x!==x||e._y!==y){e._x=x;e._y=y;e.classList.add("mv");clearTimeout(e._t);e._t=setTimeout(()=>e.classList.remove("mv"),1150)}e.style.left=x+"%";e.style.top=y+"px"};
+function mk(cls,h,sh,mb){const e=document.createElement("div"),ck=cls.includes("cook"),cr=cls.includes("car"),i=ck?SM.ck.length:SM.n;e.className="ac "+cls;e._sk=SK[i%5];
+ e.innerHTML=(cr?carSvg(i):ck?cookSvg(i):pplSvg(i,sh))+(mb!==undefined?`<span class="mb">${mb}</span>`:"");(cr?$("dtw"):$("act")).appendChild(e);return e}
+const MO={"🙂":["M10 13q3 2.2 6 0","M8.8 6.4h3M14.2 6.4h3"],"😟":["M10 14q3-1.6 6 0","M8.6 7l3.2-1.4M17.4 7l-3.2-1.4"],"😠":["M10 14.4q3-2.6 6 0","M8.4 5.4l3.8 1.8M17.6 5.4l-3.8 1.8"],"😋":["M9.5 12.4q3.5 4.4 7 0z","M8.8 6q1.5-1.2 3 0M14.2 6q1.5-1.2 3 0"]};
+MO["😡"]=MO["😠"];MO["😄"]=MO["😋"];MO["😊"]=["M10 13q3 2.6 6 0",MO["😋"][1]];
+const face=(c,f)=>{if(c.car){c.el.lastChild.textContent=f;return}const m=MO[f]||MO["🙂"],e=c.el;e.querySelector(".mo").setAttribute("d",m[0]);e.querySelector(".br").setAttribute("d",m[1]);e.querySelector(".hh").setAttribute("fill",f==="😠"||f==="😡"?"#e9806b":e._sk)};
+function out(v){SM.out.push(v);if(SM.out.length>12)SM.out.shift()}
+const sat=()=>{const o=SM.out;return o.length<3?1:Math.min(1.15,.55+.6*o.reduce((a,b)=>a+b,0)/o.length)};
+function resetSim(){$("act").innerHTML="";$("dtw").innerHTML="";Object.assign(SM,{q:[],cq:[],o:[],ck:[],tb:[],out:[],wt:null})}
+function syncCooks(){
+ while(SM.ck.length<cooks()){const i=SM.ck.length,e=mk("cook","🧑‍🍳");pl(e,...hm(i));SM.ck.push({el:e,i,s:"idle",t:0,c:null})}
+ while(SM.ck.length>cooks()){const k=SM.ck.pop();if(k.c)k.c.taken=false;k.el.remove()}}
+function nextOrder(){const a=SM.q.find(c=>!c.taken),b=SM.cq.find(c=>!c.taken);return a&&b?(a.w>=b.w?a:b):a||b}
+function cook(k,dt){k.t-=dt;const e=k.el.classList;
+ if(k.s==="idle"){const c=nextOrder();if(!c)return;c.taken=true;bub(c,c.food);k.c=c;k.s="go";k.t=1.1;e.add("mv");pl(k.el,(k.i%2?40:27)+(k.i>>1)*3,112)}
+ else if(k.s==="go"&&k.t<=0){k.s="cook";k.t=cookT();e.remove("mv");e.add("wk");k.el.style.setProperty("--ws",(.6/spd())+"s")}
+ else if(k.s==="cook"&&k.t<=0){k.s="back";k.t=1.1;e.remove("wk");e.add("mv");pl(k.el,k.c.car?12:41,112)}
+ else if(k.s==="back"&&k.t<=0){serve(k.c);k.c=null;k.s="home";k.t=1.1;pl(k.el,...hm(k.i))}
+ else if(k.s==="home"&&k.t<=0){k.s="idle";e.remove("mv")}}
+function freeTable(){for(let k=0;k<ntb();k++)if(!SM.tb[k])return k;return -1}
+function serve(c){S.served=(S.served||0)+1;pop(c.car?"10%":"41%",100,"+"+fmt(inc()*cInt()));const l=c.car?SM.cq:SM.q;l.splice(l.indexOf(c),1);out(1-.4*Math.min(1,c.w/c.pat));
+ if(c.car){face(c,"😄");c.st="out";c.t=2.5;pl(c.el,-50,20);SM.o.push(c);return}
+ face(c,"😋");c.tb=freeTable();if(c.tb>=0){c.el.classList.add("sit");SM.tb[c.tb]=true;const[x,y]=tp(c.tb);pl(c.el,x,y-4)}else pl(c.el,62,204);c.st="eat";c.t=6;SM.o.push(c)}
+function leave(c){bub(c,"");c.el.classList.remove("sit");if(c.tb>=0)SM.tb[c.tb]=false;c.st="out";c.t=3;face(c,"😊");pl(c.el,108,222)}
+function spawn(){const c={el:mk("pp","🙂",["#e63946","#457b9d","#2a9d8f","#f4a261","#8d5fd3"][SM.n++%5],""),w:0,pat:pat(),st:"q",tb:-1,food:["🍔","🍟","🥤","🍕","🌭"][SM.n%5]};if(SM.n%4==0){c.el.style.transform="scale(.78)";c.el.style.transformOrigin="50% 100%"}pl(c.el,104,204);
+ if(SM.q.length>=qmax()){face(c,"😡");out(0);c.st="out";c.t=2;SM.o.push(c);setTimeout(()=>pl(c.el,108,222),60);return}SM.q.push(c)}
+function spawnCar(){if(SM.cq.length>=3)return;const c={el:mk("car","🚗",0,"🙂"),car:1,w:0,pat:pat()*1.3,st:"q",tb:-1};pl(c.el,110,20);SM.cq.push(c)}
+function sim(dt){
+ syncCooks();SM.ck.forEach(k=>cook(k,dt));
+ [SM.q,SM.cq].forEach((l,ci)=>{
+  [...l].forEach(c=>{c.w+=dt;if(!c.taken){const r=c.w/c.pat;face(c,r<.5?"🙂":r<.85?"😟":"😠");bub(c,l[0]===c?"💬":"");
+   if(c.w>c.pat){l.splice(l.indexOf(c),1);bub(c,"");face(c,"😡");out(0);c.st="out";c.t=2.5;pl(c.el,ci?-50:108,ci?20:222);SM.o.push(c)}}});
+  const gap=ci?14:Math.min(8,56/qmax());l.forEach((c,i)=>pl(c.el,ci?10+32*i:44+gap*i,ci?20:204))});
+ SM.o=SM.o.filter(c=>{c.t-=dt;if(c.st==="eat"&&c.t<=0)leave(c);else if(c.st==="out"&&c.t<=0){c.el.remove();return false}return true});
+ if(lv("serv")){if(!SM.wt){SM.wt=mk("pp","😊","#222");pl(SM.wt,48,204)}SM.wtT-=dt;if(SM.wtT<=0){SM.wtT=3+Math.random()*2;const[x,y]=tp(Math.floor(Math.random()*ntb()));pl(SM.wt,x+5,y+12)}}
+ SM.sp-=dt;if(SM.sp<=0){SM.sp=cInt()*(.7+Math.random()*.6);spawn()}
+ if(lv("drv")){SM.dp-=dt;if(SM.dp<=0){SM.dp=dInt()*(.7+Math.random()*.6);spawnCar()}}}
+$("tabs").onclick=e=>{const b=e.target.closest("button");if(b){S.tab=b.dataset.t;update()}};
+$("ups").onclick=e=>{const b=e.target.closest("button");if(!b||b.disabled)return;const i=+b.dataset.i,q=plan(i);
+ if(S.lv[i]<MAX&&S.money>=q.total){S.money-=q.total;S.lv[i]+=q.n;li=i;snd(1);scene();update();if(maxed()){confetti();snd(2)}if(maxed())say(`Gelukt! ${nm(S.tier)} staat op maximaal. Open nu het volgende bedrijf voor ${fmt(openCost())}. Je oude inkomen blijft gewoon doorlopen.`)}};
+$("nieuw").onclick=()=>{if(!maxed()||S.money<openCost())return;S.money-=openCost();S.locked+=own();S.done.push({n:nm(S.tier),i:ic(S.tier),v:own()});S.tier++;S.lv=UP.map(()=>0);S.deco=[];build();confetti();snd(3);
+ say(`Welkom bij ${nm(S.tier)}! Alles kost hier 8 keer zoveel, maar elk niveau levert ook 5 keer zoveel op. Je oude bedrijven leveren samen ${fmt(S.locked)}/s.`)};
+const tap=q=>{const v=clk();S.money+=v;if(!q){snd(0);if(typeof navigator!=="undefined"&&navigator.vibrate)navigator.vibrate(6)}update();const p=document.createElement("span");p.className="pop";p.textContent="+"+fmt(v);p.style.right=(8+Math.random()*60)+"px";$("sell").appendChild(p);setTimeout(()=>p.remove(),700)};
+let hold,hr2,held=0;const sb=$("sell");
+sb.onclick=()=>{if(held){held=0;return}tap()};
+sb.onpointerdown=()=>{held=0;hold=setTimeout(()=>{hr2=setInterval(()=>{held=1;tap(1)},130)},420)};
+["onpointerup","onpointerleave","onpointercancel"].forEach(ev=>{sb[ev]=()=>{clearTimeout(hold);clearInterval(hr2)}});
+function type(t){clearInterval(tw);const e=$("bt");e.textContent="";let i=0;tw=setInterval(()=>{e.textContent=t.slice(0,++i);if(i>=t.length)clearInterval(tw)},22)}
+function showBoss(t,o){clearTimeout(hide);type(t);$("boss").classList.add("in");
+ $("bch").innerHTML=o?o.map((x,k)=>{const p=Math.round((x[2].s||0)*inc());return `<button class="ch" data-k="${k}">${x[0]}<small>${x[1]}${p?" · kost "+fmt(p):""}</small></button>`}).join(""):"";$("bok").style.display=o?"none":""}
+function say(t){if(pend)return;showBoss(t);hide=setTimeout(()=>$("boss").classList.remove("in"),14000)}
+$("bok").onclick=()=>$("boss").classList.remove("in");
+const DIL=[
+{q:"Gezond eten is in de mode. Wat wordt de volgende stap voor je menu?",o:[["🥗 Vegan menu","Nieuwe klanten, blijvend meer inkomen",{s:60,p:.03,d:"🥗"}],["🍔 Dubbele cheeseburger","Even veel drukte",{s:20,b:[2,40]}],["Niets veranderen","Je houdt je geld",{}]]},
+{q:"Een foodblogger staat aan de deur. Hoe ga je hiermee om?",o:[["📸 Gratis menu aanbieden","Goede review, blijvend meer inkomen",{s:90,p:.05,d:"📸"}],["Negeren","Geen kosten, geen winst",{}]]},
+{q:"Je koks willen meer loon. Wat doe je?",o:[["💶 Loonsverhoging","Gelukkig team, blijvend meer inkomen",{s:120,p:.04}],["😤 Weigeren","Zware dag: minder inkomen voor even",{b:[.6,45]}]]},
+{q:"Je kunt een geheime saus lanceren. Het is een gok!",o:[["🌶️ Lanceren","40% kans dat het mislukt, anders veel winst",{s:60,r:.4,p:.12,d:"🌶️"}],["🔒 Veilig houden","Kleine bonus aan kasgeld",{c:30}]]},
+{q:"Er is een festival in de buurt. Wat is je plan?",o:[["🚚 Foodtruck sturen","Veel drukte voor even",{s:60,b:[3,30]}],["🏠 Thuisblijven","Wat kasgeld erbij",{c:20}]]},
+{q:"Je energierekening is hoog. Wat doe je?",o:[["☀️ Zonnepanelen","Blijvend meer inkomen",{s:150,p:.06,d:"☀️"}],["Gewoon doorbetalen","Niets verandert",{}]]},
+{q:"De lokale krant belt. Wat doe je?",o:[["📰 Advertentie kopen","Dubbel inkomen voor een minuut",{s:40,b:[2,60]}],["🌱 Interview over duurzaamheid","Blijvend meer inkomen",{p:.02,d:"📰"}]]},
+{q:"De hygiëne-inspectie komt zo langs. Wat doe je?",o:[["✨ Grote schoonmaak","Blijvend meer inkomen",{s:70,p:.03,d:"✨"}],["🎲 Het risico nemen","50% kans op een boete, anders kasgeld",{r:.5,c:120}]]}];
+function dilemma(){let k;do k=Math.floor(Math.random()*DIL.length);while(k===lastD);lastD=k;pend=DIL[k];showBoss(pend.q,pend.o)}
+$("bch").onclick=e=>{const b=e.target.closest(".ch");if(!b||!pend)return;const x=pend.o[+b.dataset.k][2],p=Math.round((x.s||0)*inc());if(p>S.money){type("Je hebt niet genoeg kasgeld voor deze keuze. Kies iets anders.");return}
+ S.money-=p;let m;
+ if(x.r&&Math.random()<x.r){const l=Math.min(S.money,Math.round(inc()*40));S.money-=l;m="Mislukt! Je verliest "+fmt(l)+"."}
+ else{m="Goede keuze!";if(x.p){S.perm+=x.p;m+=` Blijvend +${Math.round(x.p*100)}% inkomen.`}if(x.b)S.buff={m:x.b[0],until:Date.now()+x.b[1]*1000};if(x.b)m+=` ${x.b[0]}× inkomen voor ${x.b[1]} seconden.`;if(x.c){const g=Math.round(inc()*x.c);S.money+=g;m+=" Je krijgt "+fmt(g)+"."}if(x.d&&S.deco.length<5)S.deco.push(x.d)}
+ pend=null;scene();update();say(m)};
+function goal(){
+ if(SM.out.length>=4&&sat()<.8)return "Je klanten worden boos, want ze wachten te lang. Train je koks of koop meer koks en keukenapparatuur.";
+ if(!S.intro){S.intro=true;return "Welkom! Ik investeer in fastfood. Tik op de rode knop voor je eerste centen en koop upgrades. Je restaurant verandert met elke upgrade. Af en toe leg ik je een keuze voor. Maximaliseer je bedrijf, open het volgende, en je oude inkomen blijft doorlopen."}
+ if(maxed())return `Je ${nm(S.tier)} is af! Open ${nm(S.tier+1)} voor ${fmt(openCost())} en groei door.`;
+ let b=-1;UP.forEach((u,i)=>{if(vis(i)&&S.lv[i]<MAX&&(b<0||cost(i)<cost(b)))b=i});
+ return `Doel: koop "${UP[b].n}" voor ${fmt(cost(b))}. Je verdient nu ${fmt(inc())} per seconde.`}
+$("roep").onclick=()=>pend?showBoss(pend.q,pend.o):say(goal());
+$("reset").onclick=()=>{if(confirm("Alles wissen en opnieuw beginnen?")){S=fresh();pend=null;try{localStorage.removeItem(KEY)}catch(e){}build();setTimeout(()=>say(goal()),500)}};
+function tl(){setTimeout(()=>{say(goal());tl()},45000+Math.random()*30000)}
+function dl(){setTimeout(()=>{if(!pend)dilemma();dl()},240000+Math.random()*120000)}
+let AC;const snd=k=>{if(S.snd===0)return;try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime,f=[620,880,523,988][k]||620;o.type="triangle";o.frequency.setValueAtTime(f,t);if(k>1)o.frequency.exponentialRampToValueAtTime(f*1.5,t+.12);g.gain.setValueAtTime(.05,t);g.gain.exponentialRampToValueAtTime(.001,t+.18);o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+.2)}catch(e){}};
+function confetti(){const sc=$("scene");for(let i=0;i<26;i++){const e=document.createElement("span");e.className="cf";e.textContent=["🎉","🍟","⭐","🍔","💰"][i%5];e.style.left=Math.random()*95+"%";e.style.animationDelay=Math.random()*.6+"s";sc.appendChild(e);setTimeout(()=>e.remove(),2600)}}
+function buyAll(){let g=0;for(let k=0;k<300;k++){let b=-1;UP.forEach((u,i)=>{if(vis(i)&&S.lv[i]<MAX&&cost(i)<=S.money&&(b<0||cost(i)<cost(b)))b=i});if(b<0)break;S.money-=cost(b);S.lv[b]++;li=b;g++}
+ if(g){snd(1);scene();update();if(maxed()){confetti();snd(2);say(`Gelukt! ${nm(S.tier)} staat op maximaal. Open nu het volgende bedrijf voor ${fmt(openCost())}.`)}}}
+$("bulk").onclick=e=>{const b=e.target.closest("button");if(!b)return;if(b.id==="all")buyAll();else if(b.dataset.b){S.bulk=b.dataset.b==="max"?"max":+b.dataset.b;update()}};
+$("snd").onclick=()=>{S.snd=S.snd===0?1:0;update();snd(1)};
+document.addEventListener("keydown",e=>{if(e.target.tagName==="BUTTON"||e.ctrlKey||e.metaKey||e.altKey)return;const k=e.key;if(k===" "){e.preventDefault();tap()}else if(k==="1"||k==="2"||k==="3"){S.tab=G[+k-1][0];update()}else if(k==="b"||k==="B")buyAll()});
+function nextGoal(){if(maxed())return `Open ${nm(S.tier+1)} voor ${fmt(openCost())}`+(S.money<openCost()?` · nog ${fmt(openCost()-S.money)}`:" · je kunt het nu!");let b=-1;UP.forEach((u,i)=>{if(vis(i)&&S.lv[i]<MAX&&(b<0||cost(i)<cost(b)))b=i});const c=cost(b);return `Koop ${UP[b].n} (${fmt(c)})`+(S.money<c?` · nog ${fmt(c-S.money)}`:" · je kunt het nu!")}
+function save(){S.t=Date.now();try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+document.addEventListener("visibilitychange",()=>{if(document.hidden)save()});
+function pop(x,y,t){const e=document.createElement("span");e.className="cp";e.textContent=t;e.style.left=x;e.style.top=y+"px";$("act").appendChild(e);setTimeout(()=>e.remove(),1200)}
+function star(){const e=document.createElement("button");e.className="star";e.textContent="🌟";e.setAttribute("aria-label","Bonus pakken");e.style.left=(8+Math.random()*78)+"%";e.style.top=(20+Math.random()*130)+"px";
+ e.onclick=()=>{const g=Math.round(inc()*40);S.money+=g;pop(e.style.left,parseInt(e.style.top),"+"+fmt(g));e.remove()};$("scene").appendChild(e);setTimeout(()=>e.remove(),9000)}
+function rush(){SM.rush=Date.now()+30000;$("rush").classList.add("on");setTimeout(()=>$("rush").classList.remove("on"),30000);say("Lunchdrukte! 30 seconden lang komen er twee keer zoveel klanten en verdien je 1,5 keer zoveel. Zorg dat je koks het aankunnen.")}
+function tod(){const p=(Date.now()/240000)%1,nt=p>.6&&p<.9,ev=(p>=.5&&p<=.6)||p>=.9,sc=$("scene");
+ sc.style.setProperty("--sky",nt?"linear-gradient(#0b1d3a,#27406b)":ev?"linear-gradient(#ff9a5a,#ffd9a0)":"linear-gradient(#8fd3ff,#e6f6ff)");sc.classList.toggle("night",nt)}
+function offline(){const a=Math.min((Date.now()-(S.t||Date.now()))/1000,14400);
+ if(a>60){const g=Math.round(inc()*a*.5);S.money+=g;setTimeout(()=>say("Welkom terug! Terwijl je weg was verdiende je zaak "+fmt(g)+"."),1200)}else setTimeout(()=>say(goal()),1200)}
+function sl(){setTimeout(()=>{star();sl()},60000+Math.random()*60000)}
+function rl(){setTimeout(()=>{rush();rl()},180000+Math.random()*120000)}
+let last=Date.now(),sv=0,lt=Date.now();setInterval(()=>{const n=Date.now(),d=Math.min((n-lt)/1000,1);lt=n;sim(d)},250);
+setInterval(()=>{const n=Date.now(),dt=Math.min((n-last)/1000,5);last=n;S.money+=inc()*dt;update();
+ if(++sv>=50){sv=0;save()}},100);
+build();fit();window.addEventListener("resize",fit);offline();tl();tod();setInterval(tod,5000);setTimeout(()=>{star();sl()},45000);setTimeout(rl,90000);setTimeout(()=>{if(!pend)dilemma()},150000);setTimeout(dl,150000);
+</script></body></html>
